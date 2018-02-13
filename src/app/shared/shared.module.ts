@@ -14,6 +14,7 @@ import {ModalBasicComponent} from './modal-basic/modal-basic.component';
 import {ModalAnimationComponent} from './modal-animation/modal-animation.component';
 import {SpinnerComponent} from './spinner/spinner.component';
 import {ClickOutsideModule} from 'ng-click-outside';
+import { FieldErrorDisplayComponent } from './field-error-display/field-error-display.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -41,7 +42,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModalBasicComponent,
     ModalAnimationComponent,
     SpinnerComponent,
-    ClickOutsideModule
+    ClickOutsideModule,
+    FieldErrorDisplayComponent
   ],
   declarations: [
     ToggleFullScreenDirective,
@@ -53,7 +55,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CardComponent,
     ModalBasicComponent,
     ModalAnimationComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    FieldErrorDisplayComponent
   ],
   providers: [
     {

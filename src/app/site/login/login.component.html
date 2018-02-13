@@ -5,7 +5,7 @@
         <div class="col-sm-12">
           <!-- Authentication card start -->
           <div class="login-card card-block auth-body mr-auto ml-auto">
-            <form class="md-float-material">
+            <form class="md-float-material" (ngSubmit)="f.form.valid && login()" name="form">
               <div class="text-center">
                 <img src="assets/images/logo.png" alt="Gradient Able">
               </div>
@@ -17,11 +17,11 @@
                 </div>
                 <hr/>
                 <div class="input-group">
-                  <input type="email" class="form-control" placeholder="Your Email Address">
+                  <input type="email" class="form-control" name="email" placeholder="Your Email Address" [(ngModel)]="model.email" required>
                   <span class="md-line"></span>
                 </div>
                 <div class="input-group">
-                  <input type="password" class="form-control" placeholder="Password">
+                  <input type="password" class="form-control" name="password" [(ngModel)]="model.password" required placeholder="Password">
                   <span class="md-line"></span>
                 </div>
                 <div class="row m-t-25 text-left">

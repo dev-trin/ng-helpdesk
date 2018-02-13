@@ -4,34 +4,50 @@ import {AdminComponent} from './layout/admin/admin.component';
 import {AuthComponent} from './layout/auth/auth.component';
 import { LoginComponent } from './site/login/login.component';
 import { ForgotComponent } from './site/forgot/forgot.component';
+import { LayoutComponent } from './main/layout/layout.component';
+import { AuthGuard } from './site/guards/index';
 const routes: Routes = [
     {
       path: '',
       component: LoginComponent,
+      canActivate: [AuthGuard]
     },
     {
       path: 'forgot',
       component: ForgotComponent,
     },
     {
-      path: 'admin',
-      component: AdminComponent,
+      path: 'main',
+      component: LayoutComponent,
       children: [
+        {
+          path: 'request',
+          loadChildren: './views/request/request.module#RequestModule',
+          
+        },
+        {
+          path: 'widget',
+          loadChildren: './theme/widget/widget.module#WidgetModule'
+        },
         {
           path: 'dashboard',
           loadChildren: './theme/dashboard/dashboard.module#DashboardModule'
         },
+        {
+          path: 'animations',
+          loadChildren: './theme/ui-elements/animation/animation.module#AnimationModule'
+        },
       ]
-    }
-  /*{
+    },
+    {
     path: '',
     component: AdminComponent,
     children: [
-      {
+      /*{
         path: '',
         redirectTo: 'dashboard/default',
         pathMatch: 'full'
-      },
+      },*/
       {
         path: 'dashboard',
         loadChildren: './theme/dashboard/dashboard.module#DashboardModule'
@@ -106,20 +122,7 @@ const routes: Routes = [
       }
     ]
   },
-  {
-    path: '',
-    component: AuthComponent,
-    children: [
-      {
-        path: 'auth',
-        loadChildren: './theme/auth/auth.module#AuthModule'
-      },
-      {
-        path: 'maintenance/offline-ui',
-        loadChildren: './theme/maintenance/offline-ui/offline-ui.module#OfflineUiModule'
-      }
-    ]
-  }*/
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
