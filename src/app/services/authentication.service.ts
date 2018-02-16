@@ -9,8 +9,9 @@ import { appConfig } from '../app.config';
 export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
-    login(username: string, password: string) {
-        return this.http.post<any>(appConfig.apiUrl + '/users/authenticate', { username: username, password: password })
+    login(email: string, password: string) {
+        const data = {email: email, password: password };
+        return this.http.post<any>(appConfig.apiUrl + '/users/authenticate', data)
             .map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
@@ -25,5 +26,10 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
+    }
+
+    test(name: string) {
+        return this.http.post<any>("/users/api", {name: name})
+          .map(res=>res.json().message);
     }
 }

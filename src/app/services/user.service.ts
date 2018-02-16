@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import 'rxjs/add/operator/map';
 import { appConfig } from '../app.config';
 import { User } from '../models/index';
 
@@ -27,4 +27,5 @@ export class UserService {
     delete(_id: string) {
         return this.http.delete(appConfig.apiUrl + '/users/' + _id);
     }
+    
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
 import {AlertService, AuthenticationService } from '../../services/index';
 
 @Component({
@@ -14,6 +13,7 @@ export class LoginComponent implements OnInit {
   model: any = {};
   loading = false;
   returnUrl: string;
+  private name: string;
   
   constructor(
     private route: ActivatedRoute,
@@ -31,15 +31,23 @@ export class LoginComponent implements OnInit {
 
   login() {
       this.loading = true;
-      this.authenticationService.login(this.model.username, this.model.password)
+      this.authenticationService.login(this.model.email, this.model.password)
           .subscribe(
               data => {
+                  console.log("angular");
                   this.router.navigate([this.returnUrl]);
               },
               error => {
                   this.alertService.error(error);
                   this.loading = false;
               });
+  }
+
+  test(){
+    this.authenticationService.test(this.name).subscribe(res=>{
+        console.log(res);
+       console.log('angular');
+      });
   }
 
 }

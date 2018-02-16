@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormsModule, FormBuilder } from '@angular/forms';
 import { CustomValidators } from 'ng2-validation';
 
 @Component({
