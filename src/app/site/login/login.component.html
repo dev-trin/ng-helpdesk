@@ -4,13 +4,8 @@
       <div class="row">
         <div class="col-sm-12">
           <!-- Authentication card start -->
-
-          <form (ngSubmit)="test()">
-            <input type="text" name="name" [(ngModel)]="name">
-            <input type="submit" value="test">
-        </form>
           <div class="login-card card-block auth-body mr-auto ml-auto">
-            <form class="md-float-material" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+            <form class="md-float-material" [formGroup]="myform" name="form" (ngSubmit)="login()" novalidate>
               <div class="text-center">
                 <img src="assets/images/logo.png" alt="Gradient Able">
               </div>
@@ -21,15 +16,35 @@
                   </div>
                 </div>
                 <hr/>
-                <div class="input-group" [ngClass]="{'has-error': f.submitted && !email.valid}">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email Address" [(ngModel)]="model.email" #email="ngModel" required>
-                  <div *ngIf="f.submitted && !email.valid" class="help-block">email is required</div>
+                <div class="col-12" *ngIf="msg === 'fail' || msg === 'exits'">
+                  <div class="alert alert-danger">email หรือ password ไม่ถูกต้อง</div>
+                </div>
+
+                <div class="input-group" [ngClass]="{
+                  'has-danger': myform.controls.email.invalid && myform.controls.email.dirty, 
+                  'has-success': myform.controls.email.valid && myform.controls.email.dirty }">
+                  <input type="email" class="form-control" placeholder="Your Email Address" formControlName="email" required>
+                 
                   <span class="md-line"></span>
                 </div>
-                <div class="input-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-                  <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required placeholder="Password">
-                  <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+                <div class="col-12">
+                  <div class="messages text-danger"*ngIf="email.errors && (email.dirty || email.touched)">
+                    <p *ngIf="email.errors.required">Email ไม่ควรเป็นค่าว่าง</p>
+                    <p *ngIf="email.errors.pattern">ที่อยู่อีเมลต้องมีอักขระ @ อย่างน้อยหนึ่งตัว</p>
+                </div>
+                </div>
+
+
+                <div class="input-group" [ngClass]="{'has-danger': password.invalid && (password.dirty || password.touched),
+                    'has-success': password.valid && (password.dirty || password.touched)}">
+                  <input type="password" class="form-control" formControlName="password" required placeholder="Password">
                   <span class="md-line"></span>
+                </div>
+                <div class="col-12">
+                  <div class="messages text-danger" *ngIf="password.errors && (password.dirty || password.touched)">
+                    <p *ngIf="password.errors.required">Password ไม่ควรเป็นค่าว่าง</p>
+                    <p *ngIf="password.errors.minlength">รหัสผ่านต้องยาวอย่างน้อย {{ password.errors.minlength.requiredLength - password.errors.minlength.actualLength}} อักขระ </p>
+                  </div>
                 </div>
                 <div class="row m-t-25 text-left">
                   <div class="col-12">
@@ -47,8 +62,9 @@
                 </div>
                 <div class="row m-t-30">
                   <div class="col-md-12">
-                    <button type="submit" [disabled]="loading" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Sign in</button>
-                    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    
+                    <button type="submit" [disabled]="!myform.valid" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Sign in</button>
+                    <img *ngIf="loading === true" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                   </div>
                 </div>
                 <hr/>
@@ -61,7 +77,7 @@
                     <img src="assets/images/auth/Logo-small-bottom.png" alt="small-logo.png">
                   </div>
                 </div>
-  
+                
               </div>
             </form>
             <!-- end of form -->

@@ -5,7 +5,7 @@
         <div class="col-sm-12">
           <!-- Authentication card start -->
           <div class="login-card card-block auth-body mr-auto ml-auto">
-            <form class="md-float-material">
+            <form class="md-float-material" [formGroup]="myform" name="form" (ngSubmit)="forgot()" novalidate>
               <div class="text-center">
                 <img src="assets/images/logo.png" alt="logo.png">
               </div>
@@ -16,13 +16,28 @@
                   </div>
                 </div>
                 <p class="text-inverse b-b-default text-right">Back to <a [routerLink]="['/']">Login.</a></p>
-                <div class="input-group">
-                  <input class="form-control" placeholder="Your Email Address">
+                <div class="col-12" *ngIf="msg === 'success'">
+                  <div class="alert alert-success">ระบบได้ส่งรหัสผ่านทางอีเมล์ของคุณเรียบร้อยแล้ว</div>
+                </div>
+
+                <div class="input-group" [ngClass]="{
+                  'has-danger': myform.controls.email.invalid && myform.controls.email.dirty, 
+                  'has-success': myform.controls.email.valid && myform.controls.email.dirty }">
+                  <input class="form-control" type="email" formControlName="email" placeholder="Your Email Address" required>
                   <span class="md-line"></span>
                 </div>
+
+                  <div class="col-12">
+                    <div class="messages text-danger"*ngIf="email.errors && (email.dirty || email.touched)">
+                      <p *ngIf="email.errors.required">Email ไม่ควรเป็นค่าว่าง</p>
+                      <p *ngIf="email.errors.pattern">ที่อยู่อีเมลต้องมีอักขระ @ อย่างน้อยหนึ่งตัว</p>
+                    </div>
+                  </div>
+
+
                 <div class="row">
                   <div class="col-md-12">
-                    <button type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Reset Password</button>
+                    <button type="submit" [disabled]="!myform.valid" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">forgot Password</button>
                   </div>
                 </div>
                 <hr/>
@@ -36,6 +51,7 @@
                   </div>
                 </div>
               </div>
+              
             </form>
             <!-- end of form -->
           </div>

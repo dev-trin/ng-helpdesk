@@ -10,10 +10,14 @@ export class AuthGuard implements CanActivate {
         if (localStorage.getItem('currentUser')) {
             // logged in so return true
             return true;
-        }
+        } /*else {
+            this.router.navigate(['/']);
+            return false;
+        }*/
 
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/'], { queryParams: { returnUrl: state.url }});
+     //   window.alert("You don't have permission to view this page");
         return false;
     }
 }

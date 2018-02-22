@@ -8,24 +8,41 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const expressValidator = require('express-validator');
+const flash = require('connect-flash');
+const cors = require('cors');
 const app = express();
 
 // passport
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-// connect to mongodb
-mongoose.createConnection('mongodb://localhost:27017/help4');
-var db = mongoose.connection
+// cors middleware
+app.use(cors());
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
+    next();
+}
 
 
 // use session for tacking logins
-//app.use(cookieParser());
+app.use(cookieParser());
 app.use(session({
     secret: 'secret',
     saveUninitialized: true,
-    resave: true
+    resave: true,
+    key: 'user_sid',
+    cookie: {
+        expires: 600000
+    }
 }));
+
+// Passport init
+//require('./models/passport')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Express Validator
 app.use(expressValidator({
@@ -48,13 +65,27 @@ app.use(expressValidator({
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(allowCrossDomain);
 
 // serve static files from template
 app.use(express.static(path.join(__dirname, '../dist')));
 
+
+// connect flash
+app.use(flash());
+
+// global vars
+app.use(function (req, res, next) {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    next();
+});
+
 // include routes
 const users = require('./routes/api_user');
 app.use('/users', users);
+
 
 
 // catch 404 and forward to error handler

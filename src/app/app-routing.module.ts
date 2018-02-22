@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AdminComponent} from './layout/admin/admin.component';
-import {AuthComponent} from './layout/auth/auth.component';
 
 import { LoginComponent } from './site/login/login.component';
 import { ForgotComponent } from './site/forgot/forgot.component';
@@ -129,21 +128,8 @@ const routes: Routes = [
         loadChildren: './theme/simple-page/simple-page.module#SimplePageModule'
       }
     ]
-  },
-  {
-    path: '',
-    component: AuthComponent,
-    children: [
-      {
-        path: 'auth',
-        loadChildren: './theme/auth/auth.module#AuthModule'
-      },
-      {
-        path: 'maintenance/offline-ui',
-        loadChildren: './theme/maintenance/offline-ui/offline-ui.module#OfflineUiModule'
-      }
-    ]
-  }*/
+  },*/
+  
 ];
 
 @NgModule({
