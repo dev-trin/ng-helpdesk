@@ -18,23 +18,18 @@ const routes: Routes = [
     component: ForgotComponent,
   },
   {
-    path: 'main',
+    path: '',
     component: LayoutComponent,
     canActivate: [AuthGuard],
     children: [
-      {
-        path: '',
-        redirectTo: 'dashboard/default',
-        pathMatch: 'full'
-      },
       {
         path: 'request',
         loadChildren: './views/request/request.module#RequestModule',
         
       },
       {
-        path: 'widget',
-        loadChildren: './theme/widget/widget.module#WidgetModule'
+        path: 'system-problems',
+        loadChildren: './views/system-problems/system-problems.module#SystemProblemsModule'
       },
       {
         path: 'dashboard',

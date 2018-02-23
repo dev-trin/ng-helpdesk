@@ -32,18 +32,18 @@ export interface Menu {
 
 const MENUITEMS = [
   {
-    label: 'Navigation',
+    label: 'หน้าหลัก',
     main: [
       {
         state: 'dashboard',
         short_label: 'D',
-        name: 'หน้าหลัก',
+        name: 'Dashboard',
         type: 'link',
         icon: 'icon-home',
       },
       {
         state: 'request',
-        short_label: 'r',
+        short_label: 'R',
         name: 'แจ้งรับบริการ',
         type: 'sub',
         icon: 'icon-view-grid',
@@ -114,17 +114,17 @@ const MENUITEMS = [
     label: 'แจ้งปัญหาระบบ',
     main: [
       {
-        state: 'bootstrap-table',
+        state: 'system-problems',
         short_label: 'B',
-        name: 'Bootstrap Table',
+        name: 'System problems',
         type: 'sub',
         icon: 'icon-receipt',
         children: [
           {
-            state: 'basic',
+            state: 'problems',
             name: 'แจ้งระบบ system'
           }, {
-            state: 'sizing',
+            state: 'system-table',
             name: 'รายการที่แจ้ง'
           }
         ]

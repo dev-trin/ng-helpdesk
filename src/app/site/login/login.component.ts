@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
               data => {
                 if(data.status == "success") {
                   console.log("lcoal",localStorage.getItem('currentUser'));
-                  this.router.navigate(['main/request/validation']);
+                  this.router.navigate(['request/validation']);
                 } else if(data.status == "fail") {
                   this.msg = "fail";
                   console.log(data);

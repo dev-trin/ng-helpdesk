@@ -106,12 +106,6 @@ router.post('/authenticate', function (req, res) {
     });
 });
 
-router.get('/logout', function (req, res) {
-    if(req.cookies.email) {
-        //delete cookies objext
-        res.clearCookie('email');
-    }
-});
 
 router.post('/forgot', (req, res) => {
     MongoClient.connect(config.url, (err, db) => {
