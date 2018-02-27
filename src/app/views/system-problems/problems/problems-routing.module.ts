@@ -7,7 +7,7 @@ const routes: Routes = [
         path: '',
         component: ProblemsComponent,
         data: {
-            title: 'แจ้งปัญหาระบบ',
+            title: 'ฟอร์มแจ้งปัญหา',
             icon: 'icon-layers',
             caption: 'กรอกข้อมูลในฟอร์ม - ตรวจสอบความถูกต้อง',
             status: true

@@ -124,7 +124,7 @@ const MENUITEMS = [
             state: 'problems',
             name: 'แจ้งระบบ system'
           }, {
-            state: 'system-table',
+            state: 'list-data',
             name: 'รายการที่แจ้ง'
           }
         ]

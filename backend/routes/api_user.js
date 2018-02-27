@@ -82,7 +82,7 @@ router.post('/authenticate', function (req, res) {
     MongoClient.connect(config.url, (err, db)=> {
         var dbo = db.db('help4');
         var query = {$and: [
-            {$or: [{email: req.body.email}, {password: req.body.password}]}
+            {$or: [{email: req.body.email}, {password: req.body.password}, {active: 1}]}
         ]};
         dbo.collection("res_users").find(query)
             .toArray(function (err,result) {
@@ -90,8 +90,8 @@ router.post('/authenticate', function (req, res) {
                 if(result.length > 0) {
                     if(result[0].email == req.body.email && result[0].password == req.body.password) {
                         console.log(result);
-                        var msg = {status: "success", result: result};                        
-                        res.json(msg);
+                       
+                        res.json(result[0]._id);
                     } else {
                         console.log("email and password dones not match");
                         var msg = {status: "fail"};

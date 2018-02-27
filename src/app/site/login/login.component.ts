@@ -64,10 +64,11 @@ export class LoginComponent implements OnInit {
       this.authenticationService.login(this.myform.value.email, this.myform.value.password)
           .subscribe(
               data => {
-                if(data.status == "success") {
+                if(data) {
                   console.log("lcoal",localStorage.getItem('currentUser'));
                   this.router.navigate(['request/validation']);
-                } else if(data.status == "fail") {
+                }
+                if(data.status == "fail") {
                   this.msg = "fail";
                   console.log(data);
                   this.router.navigate(['/']);

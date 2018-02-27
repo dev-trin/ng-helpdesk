@@ -1,9 +1,74 @@
 <div class="row">
     <div class="col-sm-12">
-
-        <app-card [title]="'ฟอร์มแจ้งระบบ Inputs Validation'" [headerContent]="'กรอกข้อมูลให้ครบถ้วน พร้อมอธิบายรายละเอียดเบื้องต้น'" [cardOptionBlock]="true">
+        
+       <!-- Basic Inputs Validation start -->
+      <app-card [title]="'ฟอร์มแจ้งปัญหาระบบ Inputs Validation'" [headerContent]="'กรอกข้อมูลให้ครบถ้วน พร้อมอธิบายรายละเอียดเบื้องต้น'" [cardOptionBlock]="true">
+        <form [formGroup]="form" name="form" (ngSubmit)="onSubmit()">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">รายการที่แจ้ง</label>
+                <div class="col-sm-10">
+                    <select name="items" formControlName="items" id="items" class="form-control form-control-info">                        
+                        
+                        <option *ngFor="let line of selectArr" [ngValue]="line._id">{{ line.name }}</option>
+                    </select>                    
+                </div>
+            </div>
             
-        </app-card>
+          
+            <div class="form-group row" [ngClass]="displayFieldCss('date')">
+                <label class="col-sm-2 col-form-label">วันที่เกิดเหตุการณ์</label>
+                <div class="col-sm-10">
+                    <div class="form-group">
+                        <div class="input-group">
+                                <input type="datetime-local" name="date" placeholder="yyyy-mm-dd"  class="form-control" id="date"  formControlName="date">
+                                <div class="input-group-addon bg-default">
+                                    <span class="icofont icofont-ui-calendar"></span>
+                                </div>
+                                
+                        </div>
+                    </div>      
+                    <app-field-error-display [displayError]="isFieldValid('date')" errorMsg="Please inform your date">
+                        </app-field-error-display>     
+                          
+                </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="displayFieldCss('subject')">
+                <label class="col-sm-2 col-form-label">เรื่อง</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="subject" placeholder="เรื่อง"  formControlName="subject">
+                    <app-field-error-display [displayError]="isFieldValid('subject')" errorMsg="Please inform your subject">
+                    </app-field-error-display>
+                </div>
+            </div>
+
+            <div class="form-group row" [ngClass]="displayFieldCss('description')">
+                <label class="col-sm-2 col-form-label">รายละเอียด</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" cols="50" rows="3" placeholder="รายละเอียดในการขอรับบริการ" formControlName="description"></textarea>
+                  <app-field-error-display [displayError]="isFieldValid('description')" errorMsg="Please inform your description"></app-field-error-display>
+                </div>
+            </div>
+
+            <div class="form-group row" >
+                <label class="col-sm-2 col-form-label">บันทึกการแก้ไข</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" cols="50" rows="3" placeholder="บันทึกการแก้ไข" formControlName="edit"></textarea>
+                  
+                </div>
+            </div>
+
+
+          <div class="form-group row">
+            <label class="col-sm-2"></label>
+            <div class="col-sm-10">
+              <button type="submit" [disabled]="!form.valid" class="btn btn-primary m-b-0" (click)="onSubmit()">บันทึก</button>
+              <button type="button" class="btn btn-default m-b-0" (click)="reset()">ยกเลิก</button>
+            </div>
+          </div>
+        </form>
+      </app-card>
+      <!-- Basic Inputs Validation end -->
 
     </div>
 </div>

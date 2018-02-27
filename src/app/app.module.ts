@@ -18,7 +18,8 @@ import { LayoutComponent } from './main/layout/layout.component';
 
 import { AuthGuard } from './site/guards/index';
 import { JwtInterceptorProvider, ErrorInterceptorProvider } from './site/helpers/index';
-import { AuthenticationService, UserService, ForgotService} from './services/index';
+import { AuthenticationService, UserService, ForgotService, SystemService, PagerService} from './services/index';
+import { dateFormatPipe } from './pipe/date-format-pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { AuthenticationService, UserService, ForgotService} from './services/ind
     LoginComponent,
     ForgotComponent,
     LayoutComponent,
-    
+    dateFormatPipe
   ],
   imports: [
     BrowserModule,
@@ -39,7 +40,17 @@ import { AuthenticationService, UserService, ForgotService} from './services/ind
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [MenuItems,AuthGuard,JwtInterceptorProvider ,AuthenticationService, ErrorInterceptorProvider, UserService, ForgotService],
+  providers: [
+    MenuItems,
+    AuthGuard,
+    JwtInterceptorProvider,
+    AuthenticationService, 
+    ErrorInterceptorProvider, 
+    UserService, 
+    ForgotService, 
+    SystemService,
+    PagerService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,7 +5,7 @@
       <p class="text-muted m-b-10" *ngIf="breadcrumb.caption">{{ breadcrumb.caption }}</p>
       <ul class="breadcrumb-title b-t-default p-t-10">
         <li class="breadcrumb-item">
-          <a [routerLink]="['/dashboard/default/']"> <i class="fa fa-home"></i> </a>
+          <a [routerLink]="['/main/dashboard/']"> <i class="fa fa-home"></i> </a>
         </li>
         <li class="breadcrumb-item" *ngFor="let breadcrumb of breadcrumbs;">
           <a [ngClass]="breadcrumb.status === false ? 'not-active': ''" [routerLink]="breadcrumb.url">{{breadcrumb.label}}</a>

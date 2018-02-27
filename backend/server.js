@@ -84,7 +84,9 @@ app.use(function (req, res, next) {
 
 // include routes
 const users = require('./routes/api_user');
+const system = require('./routes/api_system');
 app.use('/users', users);
+app.use('/system', system);
 
 
 
