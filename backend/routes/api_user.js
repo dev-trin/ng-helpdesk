@@ -89,9 +89,8 @@ router.post('/authenticate', function (req, res) {
                 if(err) throw err;
                 if(result.length > 0) {
                     if(result[0].email == req.body.email && result[0].password == req.body.password) {
-                        console.log(result);
-                       
-                        res.json(result[0]._id);
+                        console.log(result);                        
+                        res.json(result[0].email);
                     } else {
                         console.log("email and password dones not match");
                         var msg = {status: "fail"};

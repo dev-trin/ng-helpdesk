@@ -21,10 +21,20 @@ router.get('/findall', (req, res)=> {
     mongoClient.connect(config.url, (err, db) => {
         var dbo = db.db('help4');
         dbo.collection('system_problems')
-            .find()
+            .aggregate([
+                {
+                    $lookup: {
+                        from: 'res_users',
+                        localField: 'name',
+                        foreignField: 'email',
+                        as: 'users'
+                    }
+                }
+            ])
             .toArray()
             .then(data=> {
                 res.json(data);
+                console.log(data);
             });
     });
 });
@@ -54,10 +64,10 @@ router.post('/edit', (req, res)=> {
     });
 });
 
-router.delete('/delete/:name', function (req, res) {
+router.delete('/delete/:id', function (req, res) {
     mongoClient.connect(config.url, (err, db) => {
         var dbo = db.db('help4');
-        var q = {name: req.params.name};
+        var q = {name: req.params.id};
         dbo.collection('res_system').deleteOne(q, function (err, result) {
             var response = {result: "ok", message: result.result.n + "Delete"};
             res.json(response);
@@ -68,9 +78,9 @@ router.delete('/delete/:name', function (req, res) {
 router.post('/insert', (req, res) => {
     mongoClient.connect(config.url, (err, db)=> {
         var dbo = db.db('help4');
-        var arr = [req.body.currenetUser];
+        var arr = req.body.currenetUser;
         var query = {
-            //items:  new mongoID.ObjectID(req.body.items),
+            items:  req.body.items,
             date: req.body.date,
             subject: req.body.subject,
             edit: req.body.edit,
@@ -83,6 +93,18 @@ router.post('/insert', (req, res) => {
                 var response = {result: "ok", message: result.result.n + " Inserted"};
                 res.json(response);
             });
+    });
+});
+
+
+router.delete('/dellistdata/:subject', function (req, res) {
+    mongoClient.connect(config.url, (err, db) => {
+        var dbo = db.db('help4');
+        var q = {subject: req.params.subject};
+        dbo.collection('system_problems').deleteOne(q, function (err, result) {
+            var response = {result: "ok", message: result.result.n + "Delete"};
+            res.json(response);
+        });
     });
 });
 

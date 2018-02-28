@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, FormArray, Validators, FormsModule, FormBuilder } from '@angular/forms';
+import { FormControl, FormGroup, FormArray, Validators, FormsModule, FormBuilder, Form } from '@angular/forms';
 import {NgbCalendar, NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { CustomValidators } from 'ng2-validation';
 import { HttpClient } from '@angular/common/http';
@@ -30,7 +30,10 @@ export class ProblemsComponent implements OnInit {
     form: FormGroup;
     toggle = false;
     private cur_date: string;
-    private currentUser: any;
+    private currentUser: string;
+
+    loading: boolean = false;
+
     constructor(private formBuilder: FormBuilder, 
         private http: HttpClient, 
         private systemService: SystemService,
@@ -42,12 +45,16 @@ export class ProblemsComponent implements OnInit {
     ngOnInit(): void{
         this.onLoad();
         this.form = this.formBuilder.group({
+            /*items: this.formBuilder.group({
+                _id: ['', Validators.required],
+               // name: ['', Validators.required]
+            }),*/
             items: new FormControl(''),
-            
             date: [null, Validators.required],
             subject: [null, Validators.required],
             description: [null, Validators.required],
-            edit: [null, Validators.required]
+            edit: [null, Validators.required],
+            
         });
     }
 
@@ -74,18 +81,21 @@ export class ProblemsComponent implements OnInit {
 
     onSubmit(): void{
         console.log("form", this.form.value);
-        if(this.form.valid) {
-            this.cur_date = this.myPipe.transform(this.form.value.date);
-            this.currentUser = localStorage.getItem('currentUser');
-            console.log(this.form);
-           /* this.systemService.getAll(this.form.value.items, this.cur_date, this.form.value.subject, this.form.value.edit, this.form.value.description, this.currentUser)
+        this.loading = true;
+       setTimeout(() => {
+        this.cur_date = this.form.value.date;//this.myPipe.transform(this.form.value.date);
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+           // if(this.form.valid) {
+                this.systemService.getAll(this.form.value.items, this.cur_date, this.form.value.subject, this.form.value.edit, this.form.value.description, this.currentUser)
                 .subscribe(data => {
                     console.log(data);
                     this.router.navigate(['/system-problems/list-data']);
                 }, err => {
                     console.log(err);
-                });*/
-        } 
+                });
+            //}
+           this.loading = false;
+       }, 2000);
     }
 
     validateAllFormFields(formGroup: FormGroup) {

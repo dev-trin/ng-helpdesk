@@ -16,16 +16,21 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let line of allItems">
-                    <th scope="row">1</th>
-                    <td>{{ line.items }}</td>
-                    <td>{{ line.name.email }}</td>
+                  <tr *ngFor="let line of allItems; let i = index">
+                    <th scope="row">{{ i+1 }}</th>
+                    <td>{{ line.items.name }}</td>
+                    <td>{{ line.users }} - {{ line.users.lastname }}</td>
                     <td>{{ line.subject }}</td>
                     <td>{{ line.description }}</td>
-                    <td>{{ line.date }}</td>
+                    <td>{{ line.date | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
                     <td>{{ line.edit }}</td>
                     <td align="center">
-
+                        <button type="button" (click)="edit(line._id)" class="btn btn-primary btn-sm">
+                            แก้ไข
+                        </button>
+                        <button type="button" (click)="del(line.subject)" class="btn btn-danger btn-sm">
+                            ลบ
+                        </button>
                     </td>
                   </tr>
                   

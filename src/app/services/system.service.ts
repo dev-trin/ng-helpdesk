@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest , HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/catch';
 
 import { appConfig } from '../app.config';
 
@@ -28,5 +29,16 @@ export class SystemService {
         return this.http.get<any>(appConfig.apiUrl + '/system/findall').map( res => {
             return res;
         });
+    }
+
+    deleteById(subject: string){
+        return this.http.delete<any>(appConfig.apiUrl + '/system/dellistdata/' + subject)
+            .map( res => {
+                return res;
+            });
+    }
+
+    updateArticle(_id: string) {
+        
     }
 }
