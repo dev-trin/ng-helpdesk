@@ -34,7 +34,6 @@ router.get('/findall', (req, res)=> {
             .toArray()
             .then(data=> {
                 res.json(data);
-                console.log(data);
             });
     });
 });
@@ -96,6 +95,24 @@ router.post('/insert', (req, res) => {
     });
 });
 
+router.post('/update', (req, res) => {
+    mongoClient.connect(config.url , (err, db) => {
+        var dbo = db.db('help4');
+        var q = {
+            subject: req.body.subject,
+            items: req.body.items,
+            description: req.body.description,
+            edit: req.body.edit,
+            date: req.body.date
+        };
+        dbo.collection('system_problems')
+        .update({'_id': new mongoID.ObjectID(req.body._id)},
+        { $set: q}, function (err, result) {
+            if(err) throw err;
+            res.json(result);
+        });
+    })
+})
 
 router.delete('/dellistdata/:subject', function (req, res) {
     mongoClient.connect(config.url, (err, db) => {

@@ -65,39 +65,7 @@ const MENUITEMS = [
       }
     ],
   },
-  {
-    label: 'รับซ่อม/ตรวจซ่อม',
-    main: [
-      {
-        state: 'รับซ่อม',
-        short_label: 'A',
-        name: 'รับซ่อม',
-        type: 'link',
-        icon: 'icon-reload rotate-refresh'
-      },
-      {
-        state: 'ส่งซ่อม/ส่งเคลม',
-        short_label: 'A',
-        name: 'ส่งซ่อม/ส่งเคลม',
-        type: 'link',
-        icon: 'icon-reload rotate-refresh'
-      },
-      {
-        state: 'ปิดงานซ่อม',
-        short_label: 'A',
-        name: 'ปิดงานซ่อม',
-        type: 'link',
-        icon: 'icon-reload rotate-refresh'
-      },
-      {
-        state: 'ยกเลิก',
-        short_label: 'A',
-        name: 'ยกเลิก',
-        type: 'link',
-        icon: 'icon-reload rotate-refresh'
-      }
-    ]
-  },
+  
   {
     label: 'ลงทะเบียนอุปกรณ์',
     main: [

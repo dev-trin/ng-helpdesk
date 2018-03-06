@@ -1,11 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef,TemplateRef  } from '@angular/core';
 import { HttpClient,HttpResponse, HttpHeaders, HttpRequest  } from '@angular/common/http';
+
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import { Subject } from 'rxjs/Subject';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, FormArray, Validators, FormsModule, FormBuilder, Form } from '@angular/forms';
 
 import * as _ from 'underscore';
 import { PagerService, SystemService } from '../../../services/index';
 import { dateFormatPipe } from '../../../pipe/date-format-pipe';
+
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { appConfig } from '../../../app.config';
+
 
 @Component({
     selector: 'app-list-data',
@@ -13,7 +22,7 @@ import { dateFormatPipe } from '../../../pipe/date-format-pipe';
     styleUrls: [
       './list-data.component.scss',
     ],
-    providers: [dateFormatPipe]
+    providers: [dateFormatPipe,BsModalService]
   })
   export class ListDataComponent implements OnInit {
 
@@ -23,13 +32,29 @@ import { dateFormatPipe } from '../../../pipe/date-format-pipe';
     pager: any = {};
     // paged items
     pagedItems: any[];
+    modalRef: BsModalRef;
+    model: {};
+    config = {
+      animated: true,
+      keyboard: true,
+      backdrop: true,
+      ignoreBackdropClick: false
+    };
+    private selectArr: Array<any>;
 
-
-    constructor(private http: HttpClient, private pagerService: PagerService, private systemService: SystemService){}
+    constructor(private http: HttpClient, 
+      private pagerService: PagerService, 
+      private formBuilder: FormBuilder,
+      private modalService: BsModalService,
+      private systemService: SystemService,private router: Router){}
 
     ngOnInit(): void{
       this.onLoad();
+      this.onSelect();
+      this.allItems = [];
     }
+
+    
 
     onLoad(){
       this.systemService.findAll()
@@ -42,17 +67,27 @@ import { dateFormatPipe } from '../../../pipe/date-format-pipe';
         });
     }
 
+    onSelect(){
+      this.http.get<any[]>(appConfig.apiUrl + "/system/show")
+          .subscribe(res => {
+              console.log(res);
+              this.selectArr = res;
+          }, err => {
+              console.log(err);
+          });
+  }
+
     setPage(page: number) {
-      if(page < 1 || page > this.pager.totalPages) {
-        return;
+      if (page < 1 || page > this.pager.totalPages) {
+          return;
       }
 
       // get pager object from service
       this.pager = this.pagerService.getPager(this.allItems.length, page);
 
-      // get curretn page of items
+      // get current page of items
       this.pagedItems = this.allItems.slice(this.pager.startIndex, this.pager.endIndex + 1);
-    }
+  }
 
     del(subject: string) {
         this.systemService.deleteById(subject)
@@ -64,5 +99,22 @@ import { dateFormatPipe } from '../../../pipe/date-format-pipe';
           });
     }
 
-    edit(_id: string) {}
+    openModal(template: TemplateRef<any>, line) {
+      this.modalRef = this.modalService.show(
+        template,Object.assign({}, this.config, { class: 'gray modal-lg' })
+      );
+      this.model = line;      
+    }
+
+    onSubmit() {
+      console.log(this.model);
+     
+      /*this.systemService.updateSystem(this.model)
+        .subscribe( data => {
+            this.modalRef.hide();
+            this.onLoad();
+        }, err=> { console.log(err)});*/
+    }
+
+   
   }

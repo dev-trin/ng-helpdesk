@@ -38,7 +38,18 @@ export class SystemService {
             });
     }
 
-    updateArticle(_id: string) {
-        
+    updateSystem(model: any) {
+        const obj = {
+            subject: model.subject,
+            date: model.date,
+            edit: model.edit,
+            items: model.items,
+            description: model.description,
+            _id: model._id
+        };
+        return this.http.post<any>(appConfig.apiUrl + '/system/update', obj)
+        .map( res => {
+            return res;
+        });
     }
 }

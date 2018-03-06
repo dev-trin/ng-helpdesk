@@ -33,7 +33,7 @@ export class ProblemsComponent implements OnInit {
     private currentUser: string;
 
     loading: boolean = false;
-
+    test;
     constructor(private formBuilder: FormBuilder, 
         private http: HttpClient, 
         private systemService: SystemService,
@@ -53,9 +53,11 @@ export class ProblemsComponent implements OnInit {
             date: [null, Validators.required],
             subject: [null, Validators.required],
             description: [null, Validators.required],
-            edit: [null, Validators.required],
+            edit: new FormControl('')
+           // edit: [null, Validators.required],
             
         });
+        console.log("router=>",this.test);
     }
 
     onLoad(){
