@@ -217,19 +217,27 @@ const MENUITEMS = [
         type: 'sub',
         icon: 'icon-settings',
         children: [
-          /*{
-            state: 'error',
-            name: 'Error'
+          {
+            state: 'system',
+            name: 'รายการระบบ'
           },
           {
             state: 'coming-soon',
-            name: 'Coming Soon'
-          },*/
+            name: 'ฝ่าย/แผนก'
+          },
           {
             state: 'offline-ui',
-            name: 'Offline UI',
+            name: 'บริษัทผู้ให้บริการ',
             target: true
-          }
+          },
+          {
+            state: 'error',
+            name: 'สถานที่ตั้ง'
+          },
+          {
+            state: 'error',
+            name: 'ประเภทอุปกรณ์'
+          },
         ]
       },
       {

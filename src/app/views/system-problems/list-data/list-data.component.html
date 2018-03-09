@@ -6,20 +6,20 @@
                   <thead class="table-info">
                   <tr>
                     <th>#</th>
-                    <th (click)="sort('subject')">
+                    <th style="width: auto" (click)="sort('subject')">
                         รายการที่แจ้ง
                     </th>
-                    <th>ชื่อผู้แจ้ง</th>
-                    <th>เรื่อง</th>
-                    <th>รายละเอียด</th>
-                    <th>วันที่เกิดเหตุการณ์</th>
-                    <th>บันทึกการแก้ไข</th>
-                    <th> &nbsp; </th>
+                    <th style="width: auto">ชื่อผู้แจ้ง</th>
+                    <th style="width: auto">เรื่อง</th>
+                    <th style="width: auto">รายละเอียด</th>
+                    <th style="width: auto">วันที่เกิดเหตุการณ์</th>
+                    <th style="width: auto">บันทึกการแก้ไข</th>
+                    <th style="width: auto"> &nbsp; </th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr *ngFor="let line of pagedItems; let i = index">
-                    <th scope="row">{{ i+1 }}</th>
+                    <td scope="row">{{ i+1 }}</td>
                     <td>{{ line.items.name }}</td>
                     <td *ngFor="let user of line.users">{{ user.firstname }} {{ user.lastname }}</td>
                     <td>{{ line.subject }}</td>
@@ -27,12 +27,8 @@
                     <td>{{ line.date | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
                     <td>{{ line.edit }}</td>
                     <td align="center">
-                        <button type="button" (click)="openModal(template, line)" class="btn btn-primary btn-sm">
-                            แก้ไข
-                        </button>
-                        <button type="button" (click)="del(line.subject)" class="btn btn-danger btn-sm">
-                            ลบ
-                        </button>
+                        <button type="button" (click)="openModal(template, line)" class="btn btn-success btn-icon btn-sm"><i class="icofont icofont-ui-edit"></i></button>
+                        <button type="button" (click)="del(line.subject)" class="btn btn-danger btn-icon btn-sm"><i class="icofont icofont-ui-close"></i></button>
                     </td>
                   </tr>
                   
@@ -73,9 +69,9 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">รายการที่แจ้ง</label>
                         <div class="col-sm-10">
-                        <select name="items" [(ngModel)]="model.items" id="items" class="form-control form-control-info">                        
+                        <select name="items" [(ngModel)]="model.items"  id="items" class="form-control form-control-info">                        
                                     
-                        <option *ngFor="let line of selectArr; let i = index" [value]="line">{{ line.name }} </option>
+                        <option *ngFor="let line of selectArr; let i = index" [ngValue]="line">{{ line.name }} </option>
                         </select>                    
                     </div>
                 </div>
@@ -97,7 +93,7 @@
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">เรื่อง</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="subject" placeholder="เรื่อง"  [(ngModel)]="model.subject">
+                    <input type="text" class="form-control" id="subject" name="subject" placeholder="เรื่อง"  [(ngModel)]="model.subject">
                     
                 </div>
             </div>
@@ -105,7 +101,7 @@
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">รายละเอียด</label>
                 <div class="col-sm-10">
-                  <textarea class="form-control" cols="50" rows="3" placeholder="รายละเอียดในการขอรับบริการ" [(ngModel)]="model.description"></textarea>
+                  <textarea class="form-control" cols="50" rows="3" placeholder="รายละเอียดในการขอรับบริการ" [(ngModel)]="model.description" name="description"></textarea>
                   
                 </div>
             </div>
@@ -113,15 +109,15 @@
             <div class="form-group row" >
                 <label class="col-sm-2 col-form-label">บันทึกการแก้ไข</label>
                 <div class="col-sm-10">
-                  <textarea class="form-control" cols="50" rows="3" placeholder="บันทึกการแก้ไข" [(ngModel)]="model.edit"></textarea>
+                  <textarea class="form-control" cols="50" rows="3" placeholder="บันทึกการแก้ไข" [(ngModel)]="model.edit" name="edit"></textarea>
                   
                 </div>
             </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default waves-effect" (click)="modalRef.hide()">Close</button>
-                <button type="submit" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                <button type="button" class="btn btn-default waves-effect" (click)="modalRef.hide()">ยกเลิก</button>
+                <button type="submit" class="btn btn-primary waves-effect waves-light">บันทึก</button>
               </div>
             </form>
         </ng-template>

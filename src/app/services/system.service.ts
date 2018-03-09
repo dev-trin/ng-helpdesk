@@ -26,7 +26,8 @@ export class SystemService {
     }
 
     findAll() {
-        return this.http.get<any>(appConfig.apiUrl + '/system/findall').map( res => {
+        return this.http.get<any>(appConfig.apiUrl + '/system/findall')
+        .map( res => {
             return res;
         });
     }
@@ -48,8 +49,25 @@ export class SystemService {
             _id: model._id
         };
         return this.http.post<any>(appConfig.apiUrl + '/system/update', obj)
-        .map( res => {
-            return res;
-        });
+            .map(( response: Response) => <any>response)
+                .catch(this.handleError);
+    }
+
+    add(value: any) {
+        let name = {name: value.name};
+        return this.http.post<any>(appConfig.apiUrl + "/system/add", name)
+            .map(( response: Response) => <any>response)
+                .catch(this.handleError);
+    }
+    Delete(name: string) {
+        return this.http.delete<any>(appConfig.apiUrl + "/system/delete/" + name)
+            .map( res => {
+                return res;
+            });
+    }
+
+    private handleError(error: Response) {
+        console.error(error);
+        return Observable.throw(error.json() || 'Server Error');
     }
 }

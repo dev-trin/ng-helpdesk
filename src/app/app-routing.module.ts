@@ -32,12 +32,8 @@ const routes: Routes = [
         loadChildren: './views/system-problems/system-problems.module#SystemProblemsModule'
       },
       {
-        path: 'dashboard',
-        loadChildren: './theme/dashboard/dashboard.module#DashboardModule'
-      },
-      {
-        path: 'animations',
-        loadChildren: './theme/ui-elements/animation/animation.module#AnimationModule'
+        path: 'maintenance',
+        loadChildren: './views/maintenance/maintenance.module#MaintenanceModule'
       },
     ]
   },

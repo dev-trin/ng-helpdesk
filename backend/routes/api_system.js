@@ -11,8 +11,9 @@ router.get('/show', (req, res) => {
             .find()
             .toArray()
             .then(data=> {
-                const output = {result: "ok", message: data}
+                const output = {result: "ok", message: data}                
                 res.json(data);
+                
             });
     });
 });
@@ -34,6 +35,7 @@ router.get('/findall', (req, res)=> {
             .toArray()
             .then(data=> {
                 res.json(data);
+                
             });
     });
 });
@@ -63,10 +65,10 @@ router.post('/edit', (req, res)=> {
     });
 });
 
-router.delete('/delete/:id', function (req, res) {
+router.delete('/delete/:name', function (req, res) {
     mongoClient.connect(config.url, (err, db) => {
         var dbo = db.db('help4');
-        var q = {name: req.params.id};
+        var q = {name: req.params.name};
         dbo.collection('res_system').deleteOne(q, function (err, result) {
             var response = {result: "ok", message: result.result.n + "Delete"};
             res.json(response);

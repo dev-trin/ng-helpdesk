@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs/Subject';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, FormArray, Validators, FormsModule, FormBuilder, Form } from '@angular/forms';
+import { FormControl, FormGroup, FormArray, Validators, FormsModule, FormBuilder, Form, NgForm  } from '@angular/forms';
 
 import * as _ from 'underscore';
 import { PagerService, SystemService } from '../../../services/index';
@@ -21,6 +21,7 @@ import { appConfig } from '../../../app.config';
     templateUrl: './list-data.component.html',
     styleUrls: [
       './list-data.component.scss',
+      '../../../../assets/icon/icofont/css/icofont.scss'
     ],
     providers: [dateFormatPipe,BsModalService]
   })
@@ -33,7 +34,7 @@ import { appConfig } from '../../../app.config';
     // paged items
     pagedItems: any[];
     modalRef: BsModalRef;
-    model: {};
+    model: any;
     config = {
       animated: true,
       keyboard: true,
@@ -70,8 +71,8 @@ import { appConfig } from '../../../app.config';
     onSelect(){
       this.http.get<any[]>(appConfig.apiUrl + "/system/show")
           .subscribe(res => {
-              console.log(res);
               this.selectArr = res;
+            
           }, err => {
               console.log(err);
           });
@@ -103,17 +104,19 @@ import { appConfig } from '../../../app.config';
       this.modalRef = this.modalService.show(
         template,Object.assign({}, this.config, { class: 'gray modal-lg' })
       );
-      this.model = line;      
+      this.model = line;
+      console.log("openModal" , this.model);
     }
 
     onSubmit() {
+      
       console.log(this.model);
      
-      /*this.systemService.updateSystem(this.model)
+      this.systemService.updateSystem(this.model)
         .subscribe( data => {
             this.modalRef.hide();
             this.onLoad();
-        }, err=> { console.log(err)});*/
+        }, err=> { console.log(err)});
     }
 
    
