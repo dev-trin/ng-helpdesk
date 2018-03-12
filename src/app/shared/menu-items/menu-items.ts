@@ -222,7 +222,7 @@ const MENUITEMS = [
             name: 'รายการระบบ'
           },
           {
-            state: 'coming-soon',
+            state: 'groups',
             name: 'ฝ่าย/แผนก'
           },
           {

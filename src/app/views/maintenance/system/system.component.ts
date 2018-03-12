@@ -26,6 +26,7 @@ export class SystemComponent implements OnInit {
     public result: Array<any>;
     modalRef: BsModalRef;
     form: FormGroup;
+    public model: any;
     config = {
         animated: true,
         keyboard: true,
@@ -77,8 +78,8 @@ export class SystemComponent implements OnInit {
             editLine, Object.assign({}, this.config, {class: 'gray modal-lg'})
         );
         
-        this.form.value.name = line.name;
-        console.log("editmodal", this.form.value.name);
+        this.model = line;
+        console.log("editmodal", this.model);
     }
 
     del(name: string) {
@@ -97,6 +98,16 @@ export class SystemComponent implements OnInit {
             this.modalRef.hide();
             this.onLoad();
         }, err => {
+            console.log(err);
+        });
+    }
+
+    onEdit(){
+        console.log(this.model);
+        this.systemService.edit(this.model).subscribe(data=> {
+            this.modalRef.hide();
+            this.onLoad();
+        }, err=> {
             console.log(err);
         });
     }

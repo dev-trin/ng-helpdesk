@@ -66,6 +66,13 @@ export class SystemService {
             });
     }
 
+    edit(model: any) {
+        let objName = {id: model._id, name: model.name};
+        return this.http.post<any>(appConfig.apiUrl + '/system/edit', objName)
+            .map((response: Response) => <any>response)
+            .catch(this.handleError);
+    }
+
     private handleError(error: Response) {
         console.error(error);
         return Observable.throw(error.json() || 'Server Error');
