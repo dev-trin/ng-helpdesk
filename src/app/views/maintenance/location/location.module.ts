@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GroupsComponent } from './groups.component';
+import { LocationComponent } from './location.component';
 import { SharedModule } from '../../../shared/shared.module';
-import { GroupsRoutingModule } from './groups-routing.module';
+import { LocationRoutingModule } from './location-routing.module';
 import {ModalModule} from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [
         CommonModule,
-        GroupsRoutingModule,
+        LocationRoutingModule,
         SharedModule,
         FormsModule,
         ModalModule.forRoot(),
         ReactiveFormsModule
     ],
-    declarations: [GroupsComponent]
+    declarations: [LocationComponent]
 })
-export class GroupsModule {}
+export class LocationModule {}

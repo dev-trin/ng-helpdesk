@@ -6,12 +6,12 @@ const routes: Routes = [
     {
         path: '',
         component: SystemComponent,
-       /* data: {
+        data: {
             title: 'รายการที่แจ้งระบบ',
             icon: 'icon-layers',
             caption: 'ชื่อรายการที่แจ้งปัญหาระบบ เช่น แจ้งปัญหา server, แจ้งปัญหาโทรศัพท์ เป็นต้น',
             status:  true
-        }*/
+        }
     }
 ];
 @NgModule({

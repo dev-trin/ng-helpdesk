@@ -213,7 +213,7 @@ const MENUITEMS = [
       {
         state: 'maintenance',
         short_label: 'A',
-        name: 'Maintenance',
+        name: 'ข้อมูลพื้นฐาน',
         type: 'sub',
         icon: 'icon-settings',
         children: [
@@ -231,7 +231,7 @@ const MENUITEMS = [
             target: true
           },
           {
-            state: 'error',
+            state: 'location',
             name: 'สถานที่ตั้ง'
           },
           {

@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-sm-12">
-        <app-card [title]="'รายการแจ้งระบบ'" [headerContent]="'ชื่อรายการที่แจ้งปัญหาระบบ เช่น แจ้งปัญหา server, แจ้งปัญหาโทรศัพท์ เป็นต้น'" [blockClass]="'icon-btn'">
+        <app-card  [blockClass]="'icon-btn'">
             
-            <button class="btn btn-primary btn-round btn-sm" (click)="openModal(template)">
+            <button class="btn btn-primary btn-round" (click)="openModal(template)">
                 <i class="icofont icofont-ui-add"></i>
                 เพิ่มรายการ
             </button>
@@ -20,8 +20,21 @@
                             <td align="center">{{i+1}}</td>
                             <td>{{ line.name }} </td>
                             <td align="center">
-                                <button class="btn btn-success btn-icon btn-sm" (click)="editModal(editLine, line)" ><i class="icofont icofont-ui-edit"></i></button>
-                                <button class="btn btn-danger btn-icon btn-sm" (click)="del(line.name)"><i class="icofont icofont-ui-close"></i></button>
+                                
+                                <div ngbDropdown class="dropdown-primary">
+                                    <button ngbDropdownToggle class="btn btn-primary btn-sm waves-effect waves-light " type="button">
+                                        <i class="icofont icofont-listine-dots"></i>
+                                    </button>
+                                    <div ngbDropdownMenu>
+                                      <a (click)="editModal(editLine, line)" class="dropdown-item waves-light waves-effect" href="javascript:">
+                                        <i class="icofont icofont-ui-edit"></i> แก้ไข
+                                      </a>
+                                      <a (click)="del(line.name)" class="dropdown-item waves-light waves-effect" href="javascript:">
+                                        <i class="icofont icofont-ui-close"></i> ลบ
+                                      </a>
+                                      
+                                  </div>
+                                </div>
                             </td>
                         </tr>
                     </tbody>

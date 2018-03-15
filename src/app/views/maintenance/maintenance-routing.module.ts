@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SystemModule } from './system/system.module';
-import { GroupsModule } from './groups/groups.module';
+import { GroupsModule } from '../maintenance/groups/groups.module';
+import { LocationModule } from './location/location.module';
 
 const routes: Routes = [
     {
         path: '',
         data: {
-            title: 'ตั้งค่าระบบ Maintennacesfsfsfsdfsfd',
-            status: true
+           // title: 'ตั้งค่าข้อมูลพื้นฐาน',
+            status: false
         },
         children: [
             {
@@ -18,6 +19,10 @@ const routes: Routes = [
             {
                 path: 'groups',
                 loadChildren: './groups/groups.module#GroupsModule'
+            }, 
+            {
+                path: 'location',
+                loadChildren: './location/location.module#LocationModule'
             }
         ]
     }

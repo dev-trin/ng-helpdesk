@@ -7,8 +7,8 @@ const routes: Routes = [
     {
         path: '',
         data: {
-            title: 'รายการแจ้งปัญหา',
-            status: true
+           // title: 'รายการแจ้งปัญหา',
+            status: false
         },
         children: [
             {

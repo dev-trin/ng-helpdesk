@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12">
-        <app-card [title]="'รายการแจ้งปัญหา System Problems'" [headerContent]="'รายงานแจ้งปัญหาเกี่ยวกับระบบที่เกิดขึ้น ส่งผลกระทบในการทำงาน เพื่อบันทึกข้อมูลและแสดงรายการทั้งหมด'" [cardOptionBlock]="true">
+        <app-card [title]="'รายการแจ้งปัญหา System Problems'" [headerContent]="'รายงานแจ้งปัญหาเกี่ยวกับระบบที่เกิดขึ้น ส่งผลกระทบในการทำงาน เพื่อบันทึกข้อมูลและแสดงรายการทั้งหมด'"  [blockClass]="'icon-btn'">
             <div class="table-responsive">
                 <table class="table table-styling">
                   <thead class="table-info">
@@ -27,8 +27,22 @@
                     <td>{{ line.date | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
                     <td>{{ line.edit }}</td>
                     <td align="center">
-                        <button type="button" (click)="openModal(template, line)" class="btn btn-success btn-icon btn-sm"><i class="icofont icofont-ui-edit"></i></button>
-                        <button type="button" (click)="del(line.subject)" class="btn btn-danger btn-icon btn-sm"><i class="icofont icofont-ui-close"></i></button>
+                      
+
+                        <div ngbDropdown class="dropdown-primary">
+                            <button ngbDropdownToggle class="btn btn-primary btn-sm waves-effect waves-light " type="button">
+                                <i class="icofont icofont-listine-dots"></i>
+                            </button>
+                            <div ngbDropdownMenu>
+                              <a (click)="openModal(template, line)" class="dropdown-item waves-light waves-effect" href="javascript:">
+                                <i class="icofont icofont-ui-edit"></i> แก้ไข
+                              </a>
+                              <a (click)="del(line.subject)" class="dropdown-item waves-light waves-effect" href="javascript:">
+                                <i class="icofont icofont-ui-close"></i> ลบ
+                              </a>
+                              
+                          </div>
+                        </div>
                     </td>
                   </tr>
                   

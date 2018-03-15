@@ -7,9 +7,9 @@ const routes: Routes = [
         path: '',
         component: GroupsComponent,
         data: {
-            title: 'รายการแจ้งปัญหา',
+            title: 'ฝ่าย แผนก',
             icon: 'icon-layers',
-            caption: 'รายงานแจ้งปัญหาเกี่ยวกับระบบที่เกิดขึ้น ส่งผลกระทบในการทำงาน เพื่อบันทึกข้อมูลและแสดงรายการทั้งหมด',
+            caption: 'ตั้งค่าข้อมูลฝ่าย / แผนกต่างๆ ในองค์กร',
             status: true
         }
     }
