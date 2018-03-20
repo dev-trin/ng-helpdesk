@@ -12,3 +12,8 @@ export class Group {
 	group: string;
 	department: string;
 }
+
+export class Location{
+    _id: string;
+    name: string;
+}

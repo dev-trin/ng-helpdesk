@@ -4,6 +4,8 @@ import { SystemModule } from './system/system.module';
 import { GroupsModule } from '../maintenance/groups/groups.module';
 import { LocationModule } from './location/location.module';
 
+
+
 const routes: Routes = [
     {
         path: '',
@@ -23,6 +25,10 @@ const routes: Routes = [
             {
                 path: 'location',
                 loadChildren: './location/location.module#LocationModule'
+            },
+            {
+                path: 'equipment',
+                loadChildren: './equipment/equipment.module#EquipmentModule'
             }
         ]
     }

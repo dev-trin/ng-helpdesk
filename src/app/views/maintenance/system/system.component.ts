@@ -97,6 +97,10 @@ export class SystemComponent implements OnInit {
         this.systemService.add(this.form.value).subscribe(data=> {
             this.modalRef.hide();
             this.onLoad();
+            this.form = this.formBuilder.group({
+                name: [null],
+                
+            });
         }, err => {
             console.log(err);
         });

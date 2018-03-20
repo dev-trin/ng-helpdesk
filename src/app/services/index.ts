@@ -4,3 +4,4 @@ export * from './forgot.service';
 export * from './system.service';
 export * from './pager.service';
 export * from './groups.service';
+export * from './location.service';

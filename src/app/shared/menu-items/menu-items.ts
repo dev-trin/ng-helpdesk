@@ -235,7 +235,7 @@ const MENUITEMS = [
             name: 'สถานที่ตั้ง'
           },
           {
-            state: 'error',
+            state: 'equipment',
             name: 'ประเภทอุปกรณ์'
           },
         ]
