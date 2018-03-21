@@ -87,10 +87,15 @@ const users = require('./routes/api_user');
 const system = require('./routes/api_system');
 const groups = require('./routes/api_groups');
 const location = require('./routes/api_location');
+const equipment = require('./routes/api_equipment');
+const supplier = require('./routes/api_supplier');
+
 app.use('/users', users);
 app.use('/system', system);
 app.use('/groups', groups);
 app.use('/location', location);
+app.use('/equipment', equipment);
+app.use('/supplier', supplier);
 
 
 // catch 404 and forward to error handler

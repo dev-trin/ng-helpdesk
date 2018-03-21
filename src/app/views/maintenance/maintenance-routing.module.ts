@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SystemModule } from './system/system.module';
 import { GroupsModule } from '../maintenance/groups/groups.module';
 import { LocationModule } from './location/location.module';
-
+import { EquipmentModule } from './equipment/equipment.module';
 
 
 const routes: Routes = [

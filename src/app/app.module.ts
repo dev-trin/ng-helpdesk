@@ -18,7 +18,7 @@ import { LayoutComponent } from './main/layout/layout.component';
 
 import { AuthGuard } from './site/guards/index';
 import { JwtInterceptorProvider, ErrorInterceptorProvider } from './site/helpers/index';
-import { AuthenticationService,UserService,ForgotService,SystemService,PagerService, GroupsService,LocationService} from './services/index';
+import { AuthenticationService,UserService,ForgotService,SystemService,PagerService, GroupsService,LocationService,EquipmentService} from './services/index';
 import { dateFormatPipe } from './pipe/date-format-pipe';
 
 @NgModule({
@@ -51,7 +51,7 @@ import { dateFormatPipe } from './pipe/date-format-pipe';
     SystemService,
     PagerService,
     GroupsService,
-    LocationService],
+    LocationService,EquipmentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
