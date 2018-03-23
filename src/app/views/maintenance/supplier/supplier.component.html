@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [blockClass]="'icon-btn'">
+        
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped" style="margin-top: 15px">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>บริษัท</th>
+              <th>ที่อยู่</th>
+              <th>ชื่อผู้ติดต่อ</th>
+              <th>อีเมล์</th>
+              <th>โทรศัพท์</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let line of result; let i = index">
+              <td> {{ i+1 }}</td>
+              <td>{{ line.name }}</td>
+              <td>{{ line.address }} -  {{ line.subdistrict }} - {{ line.district }} - {{ line.province}}  - {{ line.zipcode }}</td>
+              <td>{{ line.contact }}</td>
+              <td>{{ line.email }}</td>
+              <td>{{ line.tel }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+
+    <button mat-fab color="primary" class="app-fab--absolute" (click)="openModal(supplier)"><i class="icofont icofont-ui-edit"></i></button>
+
+
+    <!-- modal insert-->
+    <ng-template #supplier>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">เพิ่มรายการ</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form [formGroup]="form" name="form" (ngSubmit)="onInsert()">
+            <div class="modal-body">
+                <div class="example-container">
+                    <mat-form-field>
+                      <input matInput placeholder="บริษัท" name="name" formControlName="name" required>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <textarea matInput placeholder="ที่อยู่บริษัท" name="address" formControlName="address"></textarea>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <input matInput placeholder="แขวง/ตำบล" name="subdistrict" formControlName="subdistrict">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <input matInput placeholder="อำเภอ/เขต" name="district" formControlName="district">
+                    </mat-form-field>
+
+                    <mat-select placeholder="Favorite food">
+                        <mat-option *ngFor="let food of provices" [value]="food.name">
+                          {{ food.name }}
+                        </mat-option>
+                      </mat-select>
+
+                    <mat-form-field hintLabel="Max 5 characters">
+                        <input matInput #input maxlength="5" placeholder="รหัสไปรษณีย์" formControlName="zipcode" required>
+                        <mat-hint align="end">{{input.value?.length || 0}}/5</mat-hint>
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="หมายเลขโทรศัพท์" name="tel" formControlName="tel">
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="หมายเลข แฟกซ์" name="fax" formControlName="fax">
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput  type="text" style="width: 300px" placeholder="อีเมล์" formControlName="email" id="email" />
+                      </mat-form-field>
+
+                      <mat-form-field>
+                          <input matInput placeholder="ชื่อผู้ติดต่อ" name="contact" formControlName="contact">
+                        </mat-form-field>
+
+                      <mat-form-field>
+                        <input matInput placeholder="บันทึกข้อความ" name="note" formControlName="note">
+                      </mat-form-field>
+                  
+                </div>
+
+            
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" (click)="modalRef.hide()">ยกเลิก</button>
+                <button type="submit"  class="btn btn-primary waves-effect waves-light">บันทึก</button>
+            </div>
+        </form>
+    </ng-template>
+
+  </div>
+</div>
+

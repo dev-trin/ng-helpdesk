@@ -4,7 +4,7 @@ import { SystemModule } from './system/system.module';
 import { GroupsModule } from '../maintenance/groups/groups.module';
 import { LocationModule } from './location/location.module';
 import { EquipmentModule } from './equipment/equipment.module';
-
+import { SupplierModule } from './supplier/supplier.module';
 
 const routes: Routes = [
     {
@@ -29,7 +29,12 @@ const routes: Routes = [
             {
                 path: 'equipment',
                 loadChildren: './equipment/equipment.module#EquipmentModule'
+            },
+            {
+                path: 'supplier',
+                loadChildren: './supplier/supplier.module#SupplierModule' 
             }
+            
         ]
     }
 ];

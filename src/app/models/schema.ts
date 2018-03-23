@@ -37,3 +37,4 @@ export class Supplier {
     zipcode: number;
     note: string;
 }
+

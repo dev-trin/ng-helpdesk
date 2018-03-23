@@ -226,9 +226,9 @@ const MENUITEMS = [
             name: 'ฝ่าย/แผนก'
           },
           {
-            state: 'offline-ui',
+            state: 'supplier',
             name: 'บริษัทผู้ให้บริการ',
-            target: true
+            //target: true
           },
           {
             state: 'location',

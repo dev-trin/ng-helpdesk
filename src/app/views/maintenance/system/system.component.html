@@ -7,8 +7,8 @@
                 เพิ่มรายการ
             </button>
             <div class="table-responsive">
-                <table class="table table-styling" style="margin-top: 15px">
-                    <thead class="table-info">
+                <table class="table table-striped" style="margin-top: 15px">
+                    <thead>
                         <tr>
                             <th>#</th>
                             <th width="300px">รายการ</th>
@@ -17,7 +17,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let line of result; let i = index">
-                            <td align="center">{{i+1}}</td>
+                            <td>{{i+1}}</td>
                             <td>{{ line.name }} </td>
                             <td align="center">
                                 
