@@ -2,10 +2,7 @@
     <div class="col-sm-12">
         <app-card  [blockClass]="'icon-btn'">
             
-            <button class="btn btn-primary btn-round" (click)="openModal(template)">
-                <i class="icofont icofont-ui-add"></i>
-                เพิ่มรายการ
-            </button>
+         
             <div class="table-responsive">
                 <table class="table table-striped" style="margin-top: 15px">
                     <thead>
@@ -20,21 +17,20 @@
                             <td>{{i+1}}</td>
                             <td>{{ line.name }} </td>
                             <td align="center">
-                                
-                                <div ngbDropdown class="dropdown-primary">
-                                    <button ngbDropdownToggle class="btn btn-primary btn-sm waves-effect waves-light " type="button">
-                                        <i class="icofont icofont-listine-dots"></i>
-                                    </button>
-                                    <div ngbDropdownMenu>
-                                      <a (click)="editModal(editLine, line)" class="dropdown-item waves-light waves-effect" href="javascript:">
-                                        <i class="icofont icofont-ui-edit"></i> แก้ไข
-                                      </a>
-                                      <a (click)="del(line.name)" class="dropdown-item waves-light waves-effect" href="javascript:">
-                                        <i class="icofont icofont-ui-close"></i> ลบ
-                                      </a>
-                                      
-                                  </div>
-                                </div>
+                                <button mat-icon-button [matMenuTriggerFor]="menu">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="editModal(editLine, line)">
+                                    <mat-icon>create</mat-icon>
+                                    <span>แก้ไข</span>
+                                </button>
+                   
+                                <button mat-menu-item (click)="del(line.name)">
+                                    <mat-icon>delete</mat-icon>
+                                    <span>ลบ</span>
+                                </button>
+                                </mat-menu>
                             </td>
                         </tr>
                     </tbody>
@@ -42,6 +38,8 @@
             </div>
             
         </app-card>
+
+        <button mat-fab color="primary" class="app-fab--absolute" (click)="openModal(template)"><i class="icofont icofont-ui-edit"></i></button>
 
         <!-- modal insert -->
         <ng-template #template>

@@ -10,7 +10,6 @@ import { FormControl, FormGroup, FormArray, Validators, FormsModule, FormBuilder
 import { SupplierService } from '../../../services/index';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import {MatInputModule} from '@angular/material/input';
 
 
 @Component({
@@ -105,6 +104,7 @@ export class SupplierComponent implements OnInit {
   ];
   private result:  Array<any>;
   form: FormGroup;
+  addresses: FormGroup;
   model: any;
   modalRef: BsModalRef;
   config = {
@@ -125,14 +125,14 @@ export class SupplierComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: [null, Validators.required],
       address: [null, Validators.required],
+      district: [null],
+      subdistrict: [null],
+      province: [null],
+      zipcode: [null, Validators.required],
       tel: [null],
       fax: [null],
       email: [null, Validators.email],
       contact: [null],
-      district: [null],
-      subdistrict: [null],
-      province: new FormControl(''),
-      zipcode: [null, Validators.required],
       note: [null]
     });
   }
@@ -140,19 +140,10 @@ export class SupplierComponent implements OnInit {
   onLoad(){
     this.supplierService.all()
       .subscribe(data=> {
+        console.log('form', this.form.value);
+        console.log(data);
         this.result = data;
       });
-  }
-
-  isFieldValid(field: string) {
-    return !this.form.get(field).valid && this.form.get(field).touched;
-  }
-
-  displayFieldCss(field: string) {
-    return {
-      'has-error': this.isFieldValid(field),
-      'has-feedback': this.isFieldValid(field)
-    };
   }
 
   openModal(group: TemplateRef<any>) {
@@ -161,21 +152,54 @@ export class SupplierComponent implements OnInit {
     );
   }
 
-  onInsert(){
-    if(!this.form.valid) {
-      return;
-    } else {
-      console.log(this.form.value);
-      this.supplierService.create(this.form)
+  editModal(editLine: TemplateRef<any>, line) {
+    this.modalRef = this.modalService.show(
+      editLine, Object.assign({}, this.config, {class: 'gray modal-lg'})
+    );
+    this.model = line;
+    console.log("editmodal", this.model);
+  }
+
+  onInsert(){      
+    console.log(this.form.value);      
+      this.supplierService.create(this.form.value)
         .subscribe(data => {
           this.modalRef.hide();
           this.onLoad();
+          this.form = this.formBuilder.group({
+            name: [null],
+            address: [null],
+            district: [null],
+            subdistrict: [null],
+            province: [null],
+            zipcode: [null],
+            tel: [null],
+            fax: [null],
+            email: [null],
+            contact: [null],
+            note: [null]
+        });
         }, err => {
           console.log(err);
         });
-    }
+  }
 
-    
+  del(_id: string) {
+    this.supplierService.delete(_id)
+      .subscribe(data=> {
+        this.onLoad();
+      }, err => {
+        console.log(err);
+      });
+  }
+
+  onEdit(){
+    console.log(this.model);
+    this.supplierService.update(this.model)
+      .subscribe(data => {
+        this.modalRef.hide();
+        this.onLoad();
+      });
   }
 
 }

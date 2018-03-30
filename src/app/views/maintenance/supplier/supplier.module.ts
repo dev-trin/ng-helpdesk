@@ -7,7 +7,7 @@ import {ModalModule} from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule, MatSelectModule} from '@angular/material';
+import {MatButtonModule, MatSelectModule, MatMenuModule, MatIconModule} from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
 
 
@@ -20,7 +20,7 @@ import {MatDialogModule} from '@angular/material/dialog';
         ModalModule.forRoot(),
         ReactiveFormsModule,MatInputModule,
         MatButtonModule,
-        MatDialogModule,MatSelectModule
+        MatDialogModule,MatSelectModule,MatMenuModule,MatIconModule
     ],
     declarations: [SupplierComponent]
 })

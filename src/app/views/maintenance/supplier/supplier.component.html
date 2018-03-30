@@ -3,14 +3,16 @@
     <app-card [blockClass]="'icon-btn'">
         
       <div class="table-responsive">
-        <table class="table table-bordered table-striped" style="margin-top: 15px">
+        <table class="table table-striped" style="margin-top: 15px">
           <thead>
             <tr>
               <th>#</th>
               <th>บริษัท</th>
               <th>ที่อยู่</th>
-              <th>ชื่อผู้ติดต่อ</th>
-              <th>อีเมล์</th>
+              <th>ตำบล/แขวง</th>
+              <th>อำเภอ/เขต</th>
+              <th>จังหวัด</th>
+              <th>ชื่อผู้ติดต่อ</th>              
               <th>โทรศัพท์</th>
               <th></th>
             </tr>
@@ -19,10 +21,29 @@
             <tr *ngFor="let line of result; let i = index">
               <td> {{ i+1 }}</td>
               <td>{{ line.name }}</td>
-              <td>{{ line.address }} -  {{ line.subdistrict }} - {{ line.district }} - {{ line.province}}  - {{ line.zipcode }}</td>
-              <td>{{ line.contact }}</td>
-              <td>{{ line.email }}</td>
+              <td>{{ line.address }}</td>
+              <td>{{ line.subdistrict }}</td>
+              <td>{{ line.district }}</td>
+              <td>{{ line.province}}  - {{ line.zipcode }}</td>
+
+              <td>{{ line.contact }}</td>              
               <td>{{ line.tel }}</td>
+              <td align="center">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editModal(editLine, line)">
+                      <mat-icon>create</mat-icon>
+                      <span>แก้ไข</span>
+                    </button>
+                   
+                    <button mat-menu-item (click)="del(line._id)">
+                      <mat-icon>delete</mat-icon>
+                      <span>ลบ</span>
+                    </button>
+                  </mat-menu>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -42,57 +63,91 @@
         </div>
         <form [formGroup]="form" name="form" (ngSubmit)="onInsert()">
             <div class="modal-body">
-                <div class="example-container">
-                    <mat-form-field>
-                      <input matInput placeholder="บริษัท" name="name" formControlName="name" required>
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <textarea matInput placeholder="ที่อยู่บริษัท" name="address" formControlName="address"></textarea>
-                    </mat-form-field>
-
-                    <mat-form-field>
-                      <input matInput placeholder="แขวง/ตำบล" name="subdistrict" formControlName="subdistrict">
-                    </mat-form-field>
-
-                    <mat-form-field>
-                      <input matInput placeholder="อำเภอ/เขต" name="district" formControlName="district">
-                    </mat-form-field>
-
-                    <mat-select placeholder="Favorite food">
-                        <mat-option *ngFor="let food of provices" [value]="food.name">
-                          {{ food.name }}
-                        </mat-option>
-                      </mat-select>
-
-                    <mat-form-field hintLabel="Max 5 characters">
-                        <input matInput #input maxlength="5" placeholder="รหัสไปรษณีย์" formControlName="zipcode" required>
-                        <mat-hint align="end">{{input.value?.length || 0}}/5</mat-hint>
-                      </mat-form-field>
-
-                      <mat-form-field>
-                        <input matInput placeholder="หมายเลขโทรศัพท์" name="tel" formControlName="tel">
-                      </mat-form-field>
-
-                      <mat-form-field>
-                        <input matInput placeholder="หมายเลข แฟกซ์" name="fax" formControlName="fax">
-                      </mat-form-field>
-
-                      <mat-form-field>
-                        <input matInput  type="text" style="width: 300px" placeholder="อีเมล์" formControlName="email" id="email" />
-                      </mat-form-field>
-
-                      <mat-form-field>
-                          <input matInput placeholder="ชื่อผู้ติดต่อ" name="contact" formControlName="contact">
-                        </mat-form-field>
-
-                      <mat-form-field>
-                        <input matInput placeholder="บันทึกข้อความ" name="note" formControlName="note">
-                      </mat-form-field>
-                  
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">บริษัท</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" formControlName="name" id="name" required />
+                       
+                    </div>
                 </div>
+                
+                    <div class="form-group row" >
+                        <label class="col-sm-4 col-form-label">ที่อยู่บริษัท</label>
+                        <div class="col-sm-12">
+                            <textarea class="form-control" cols="50" rows="3" placeholder="ที่อยู่" formControlName="address"></textarea>
+                            
+                        </div>
+                    </div>
+                    <div class="form-group row" >
+                        <label class="col-sm-4 col-form-label">แขวง/ตำบล</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" formControlName="subdistrict" id="subdistrict" />
+                           
+                        </div>
+                    </div>
+                    <div class="form-group row" >
+                        <label class="col-sm-4 col-form-label">อำเภอ/เขต</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" formControlName="district" id="district" />
+                          
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">จังหวัด</label>
+                        <div class="col-sm-12">
+                            <select name="items" formControlName="province" id="province" class="form-control form-control-info">                        
+                                
+                                <option *ngFor="let line of provices" [ngValue]="line.name">{{ line.name }}</option>
+                            </select>                    
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">รหัสไปรษณีย์</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" formControlName="zipcode" id="zipcode" name="zipcode"  maxlength="5" required/>
+                           
+                        </div>
+                    </div>
+                
+                
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">หมายเลขโทรศัพท์</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" formControlName="tel" id="tel"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">หมายเลข แฟกซ์</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" formControlName="fax" id="fax"/>
+                      
+                       
+                    </div>
+                </div>
+                <div class="form-group row" >
+                    <label class="col-sm-4 col-form-label">Email</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" id="email" placeholder="Enter valid e-mail address" formControlName="email">
+                     
+                    </div>
+                  </div>
 
-            
+                  <div class="form-group row" >
+                      <label class="col-sm-4 col-form-label">ชื่อผู้ติดต่อ</label>
+                      <div class="col-sm-12">
+                          <input type="text" class="form-control" formControlName="contact" id="contact"/>
+                          
+                         
+                      </div>
+                  </div>
+                  <div class="form-group row" >
+                      <label class="col-sm-4 col-form-label">บันทึกข้อความ</label>
+                      <div class="col-sm-12">
+                          <input type="text" class="form-control" formControlName="note" id="note"/>
+                         
+                      </div>
+                  </div>
             </div>
 
             <div class="modal-footer">
@@ -101,6 +156,112 @@
             </div>
         </form>
     </ng-template>
+
+     <!-- modal edit -->
+     <!-- modal insert-->
+    <ng-template #editLine>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">แก้ไขรายการ</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form name="form" (ngSubmit)="onEdit()">
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">บริษัท</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" [(ngModel)]="model.name" name="name" id="name" required />
+                       
+                    </div>
+                </div>
+                
+                    <div class="form-group row" >
+                        <label class="col-sm-4 col-form-label">ที่อยู่บริษัท</label>
+                        <div class="col-sm-12">
+                            <textarea class="form-control" cols="50" rows="3" placeholder="ที่อยู่" name="address" [(ngModel)]="model.address"></textarea>
+                            
+                        </div>
+                    </div>
+                    <div class="form-group row" >
+                        <label class="col-sm-4 col-form-label">แขวง/ตำบล</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="subdistrict" [(ngModel)]="model.subdistrict" id="subdistrict" />
+                           
+                        </div>
+                    </div>
+                    <div class="form-group row" >
+                        <label class="col-sm-4 col-form-label">อำเภอ/เขต</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="district" [(ngModel)]="model.district" id="district" />
+                          
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">จังหวัด</label>
+                        <div class="col-sm-12">
+                            <select name="province" [(ngModel)]="model.province"  id="province" class="form-control form-control-info">                        
+                                
+                                <option *ngFor="let line of provices" [ngValue]="line.name">{{ line.name }}</option>
+                            </select>                    
+                        </div>
+                    </div>
+    
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">รหัสไปรษณีย์</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" [(ngModel)]="model.zipcode" id="zipcode" name="zipcode"  maxlength="5" required/>
+                           
+                        </div>
+                    </div>
+                
+                
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">หมายเลขโทรศัพท์</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" [(ngModel)]="model.tel" name="tel" id="tel"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">หมายเลข แฟกซ์</label>
+                    <div class="col-sm-12">
+                        <input type="text" class="form-control" [(ngModel)]="model.fax" name="fax" id="fax"/>
+                      
+                       
+                    </div>
+                </div>
+                <div class="form-group row" >
+                    <label class="col-sm-4 col-form-label">Email</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control" id="email" placeholder="Enter valid e-mail address" name="email" [(ngModel)]="model.email">
+                     
+                    </div>
+                  </div>
+
+                  <div class="form-group row" >
+                      <label class="col-sm-4 col-form-label">ชื่อผู้ติดต่อ</label>
+                      <div class="col-sm-12">
+                          <input type="text" class="form-control" name="contact" [(ngModel)]="model.contact" id="contact"/>
+                          
+                         
+                      </div>
+                  </div>
+                  <div class="form-group row" >
+                      <label class="col-sm-4 col-form-label">บันทึกข้อความ</label>
+                      <div class="col-sm-12">
+                          <input type="text" class="form-control" name="note" [(ngModel)]="model.note" id="note"/>
+                         
+                      </div>
+                  </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect" (click)="modalRef.hide()">ยกเลิก</button>
+                <button type="submit"  class="btn btn-primary waves-effect waves-light">บันทึก</button>
+            </div>
+        </form>
+    </ng-template>
+
 
   </div>
 </div>

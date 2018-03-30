@@ -27,14 +27,22 @@ export class Supplier {
     _id: string;
     name: string;
     address: string;
+    subdistrict: string;
+    district: string;
+    province: string;
+    zipcode: number;
     email: string;
     tel: string;
     fax: string;
     contact: string;
-    district: string;
+    note: string;
+}
+
+export class Addresses {
+    address: string;
     subdistrict: string;
+    district: string;
     province: string;
     zipcode: number;
-    note: string;
 }
 
